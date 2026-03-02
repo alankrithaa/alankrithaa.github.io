@@ -1,3 +1,3 @@
-# alankrithaa.github.io
+Alankritha Thiagarajan
 
 Projects & experiences.
