@@ -1,3 +1,2 @@
 Alankritha Thiagarajan
 
-Projects & experiences.
