@@ -5,25 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>alankrithaa | Portfolio</title>
     <style>
-        /* General Page Setup */
+        /* General Page Setup - Dark Mode */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 40px 20px;
-            background-color: #f8f9fa;
-            color: #333;
+            background-color: #121212; /* Deep charcoal background */
+            color: #e0e0e0; /* Light gray text for readability */
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
         h1 {
-            color: #1a1a1a;
+            color: #ffffff; /* Crisp white headers */
             margin-bottom: 5px;
         }
 
         .subtitle {
-            color: #666;
+            color: #a0a0a0; /* Muted gray subtitle */
             margin-bottom: 40px;
             font-size: 1.1rem;
         }
@@ -39,17 +39,19 @@
 
         /* Horizontal Card Layout (Image beside Text) */
         .project-card {
-            background: #ffffff;
+            background: #1e1e1e; /* Sleek dark card background */
+            border: 1px solid #2d2d2d; /* Subtle border to define the card edge */
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
             display: flex;
-            flex-direction: row; /* Aligns image and text side-by-side */
+            flex-direction: row; 
             overflow: hidden;
-            transition: transform 0.2s ease;
+            transition: transform 0.2s ease, border-color 0.2s ease;
         }
 
         .project-card:hover {
             transform: translateY(-3px);
+            border-color: #404040; /* Highlight border slightly on hover */
         }
 
         /* Fixed size for the header images */
@@ -57,7 +59,13 @@
             width: 380px;
             height: 240px;
             object-fit: cover;
-            flex-shrink: 0; /* Prevents image from shrinking */
+            flex-shrink: 0; 
+            opacity: 0.9; /* Slightly dim images so they blend with the dark UI */
+            transition: opacity 0.2s ease;
+        }
+
+        .project-card:hover .card-image {
+            opacity: 1.0; /* Bring image to full brightness on card hover */
         }
 
         /* Text Content Box */
@@ -65,19 +73,19 @@
             padding: 25px;
             display: flex;
             flex-direction: column;
-            justify-content: center; /* Centers text vertically beside the image */
+            justify-content: center; 
             flex-grow: 1;
         }
 
         .card-title {
             font-size: 1.5rem;
             margin: 0 0 12px 0;
-            color: #111;
+            color: #ffffff;
         }
 
         .card-description {
             font-size: 0.95rem;
-            color: #555;
+            color: #b0b0b0; /* Soft contrast text */
             line-height: 1.6;
             margin-bottom: 20px;
         }
@@ -98,23 +106,24 @@
             border-radius: 6px;
             font-weight: 600;
             font-size: 0.9rem;
-            transition: opacity 0.2s;
+            transition: filter 0.2s;
         }
 
         .btn:hover {
-            opacity: 0.9;
+            filter: brightness(1.2); /* Brightens button states slightly on hover */
         }
 
         /* GitHub Button specific style */
         .github-btn {
-            background-color: #24292e; /* GitHub dark slate */
-            color: #fff;
+            background-color: #333333; /* Dark gray for GitHub asset button */
+            color: #ffffff;
+            border: 1px solid #444444;
         }
 
         /* Report Button specific style */
         .report-btn {
-            background-color: #0056b3; /* Sleek blue */
-            color: #fff;
+            background-color: #0d6efd; /* Electric blue accent */
+            color: #ffffff;
         }
 
         /* Responsive design: Stack elements vertically on smaller screens (phones) */
@@ -142,19 +151,13 @@
             <img src="map_elites.jpg" alt="HT MAP-Elites Visualization" class="card-image">
             <div class="card-content">
                 <h3 class="card-title">HT MAP-Elites</h3>
-                
-                <!-- 🎯 EDIT DESCRIPTION 1 BELOW THIS LINE 🎯 -->
                 <p class="card-description">
                     A MAP-Elites framework that integrates Hypothesis Testing to statistically validate quality of images stored.
                 </p>
-                <!-- 🎯 EDIT DESCRIPTION 1 ABOVE THIS LINE 🎯 -->
-
                 <div class="btn-container">
-                    <!-- Linked directly to your MAP-Elites repository -->
                     <a href="https://github.com/alankrithaa/fd_me_ht" target="_blank" class="btn github-btn">
                         View Code
                     </a>
-                    <!-- Linked directly to your uploaded technical report PDF file -->
                     <a href="HT_Technical_report.pdf" target="_blank" class="btn report-btn">
                         Tech Report (PDF)
                     </a>
@@ -167,12 +170,10 @@
             <img src="kannada_pos.jpg" alt="POS Kannada Tagger Visualization" class="card-image">
             <div class="card-content">
                 <h3 class="card-title">POS Kannada Tagger</h3>
-                
-                <!-- 🎯 EDIT DESCRIPTION 2 BELOW THIS LINE 🎯 -->
                 <p class="card-description">
                     A machine learning based Part-of-Speech (POS) tagger designed for the Kannada language using Hidden Markov Models & Viterbi Algorithm.
+                </p>
                 <div class="btn-container">
-                    <!-- Linked directly to your Kannada POS README markdown path -->
                     <a href="https://github.com/HG2051-ntu/project2-ak/blob/main/project2.README.md" target="_blank" class="btn github-btn">
                         View Code
                     </a>
