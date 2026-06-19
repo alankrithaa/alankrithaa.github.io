@@ -29,7 +29,7 @@
             width: 100%;
             height: 100%;
             z-index: 0;
-            pointer-events: none; /* Allows clicks to pass through to cards/buttons */
+            pointer-events: auto; /* Required to capture clicks/taps for popping */
         }
 
         /* Foreground Content Wrapper to sit above the canvas */
@@ -41,6 +41,12 @@
             align-items: center;
             width: 100%;
             max-width: 900px;
+            pointer-events: none; /* Let events pass through by default */
+        }
+
+        /* Re-enable pointer events for interactive foreground items */
+        h1, .subtitle, .about-section, .projects-list {
+            pointer-events: auto;
         }
 
         h1 {
@@ -268,7 +274,7 @@
             <div class="project-card">
                 <img src="17485524.png" alt="F&b Recommendation System" class="card-image">
                 <div class="card-content">
-                    <h3 class="card-title">F&b Recommendation System</h3>
+                    <h3 class="card-title">F&B Recommendation System</h3>
                     <p class="card-description">
                         An NLP semantic scoring system and multi-criteria optimization model built to identify and rank premium F&B venues in Singapore across strategic archetypes.
                     </p>
@@ -295,112 +301,255 @@
             height = canvas.height = window.innerHeight;
         });
 
-        // Mouse coordinates tracker
-        const mouse = { x: null, y: null, radius: 130 };
+        const mouse = { x: null, y: null, radius: 100 };
         
         window.addEventListener('mousemove', (e) => {
             mouse.x = e.clientX;
             mouse.y = e.clientY;
         });
 
-        window.addEventListener('mouseout', () => {
-            mouse.x = null;
-            mouse.y = null;
-        });
-
-        // Handle mobile touch tracking
         window.addEventListener('touchmove', (e) => {
             if(e.touches.length > 0) {
                 mouse.x = e.touches[0].clientX;
                 mouse.y = e.touches[0].clientY;
             }
         });
-        
-        window.addEventListener('touchend', () => {
-            mouse.x = null;
-            mouse.y = null;
-        });
 
-        // Mix of math equations, coding strings, and whimsical bubbles
-        const pool = ['∑', '∫', 'μ', 'σ²', 'f(x)', 'λ', 'β', 'π', 'θ', 'ŷ', 'p-value', 'H₀', 'def', 'import', 'lambda', '[]', '{}', '()', 'f-string', 'O(n)'];
+        // Bubbles click/tap to pop
+        window.addEventListener('mousedown', popBubble);
+        window.addEventListener('touchstart', popBubble);
+
+        function popBubble(e) {
+            let clickX, clickY;
+            if (e.type === 'touchstart') {
+                clickX = e.touches[0].clientX;
+                clickY = e.touches[0].clientY;
+            } else {
+                clickX = e.clientX;
+                clickY = e.clientY;
+            }
+
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                if (!p.isSticky && p.poppingStage === 0) {
+                    const dx = clickX - p.x;
+                    const dy = clickY - p.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < p.radius) {
+                        p.poppingStage = 1; // Start pop animation
+                        break; // Only pop one bubble per click
+                    }
+                }
+            }
+        }
+
         const particles = [];
-        const particleCount = 45;
+        const stickyGroups = []; // Array of arrays containing sticky bubbles
+        const particleCount = 60;
 
-        class Element {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.type = Math.random() > 0.4 ? 'text' : 'bubble';
-                this.content = pool[Math.floor(Math.random() * pool.length)];
-                this.size = Math.random() * 12 + 12; // Base scale
-                this.bubbleRadius = Math.random() * 8 + 4;
-                this.speedX = (Math.random() - 0.5) * 0.4;
-                this.speedY = (Math.random() - 0.5) * 0.4 - 0.2; // slight upward drift
-                this.baseX = this.x;
-                this.baseY = this.y;
-                this.density = (Math.random() * 20) + 10;
-                this.alpha = Math.random() * 0.25 + 0.15; // Muted opacity so it doesn't distract
+        class Bubble {
+            constructor(isSticky = false) {
+                this.isSticky = isSticky;
+                this.radius = Math.random() * (isSticky ? 20 : 15) + (isSticky ? 15 : 10);
+                this.x = Math.random() * (width - this.radius * 2) + this.radius;
+                this.y = isSticky ? height + this.radius * 2 : height + this.radius; // Spawn off screen bottom
+                
+                // Physics
+                this.speedY = isSticky ? (Math.random() * -0.5 - 0.2) : (Math.random() * -1.5 - 0.5); // Rise speed
+                this.speedX = (Math.random() - 0.5) * (isSticky ? 0.3 : 1);
+                this.friction = 0.99;
+                
+                // Visuals
+                this.colorBase = isSticky ? [255, 182, 193] : [13, 110, 253]; // Pink sticky, blue standard
+                this.alpha = Math.random() * 0.1 + 0.15; // Muted opacity
+                
+                // Interactions
+                this.poppingStage = 0; // 0: alive, 1+: animated popping
+                this.connections = []; // Indices of connected sticky bubbles
             }
 
             draw() {
-                ctx.fillStyle = `rgba(13, 110, 253, ${this.alpha})`; // Accent themed floating color
-                ctx.strokeStyle = `rgba(13, 110, 253, ${this.alpha * 0.5})`;
-                ctx.lineWidth = 1.5;
+                if (this.poppingStage > 0) {
+                    this.drawPop();
+                    return;
+                }
 
-                if (this.type === 'text') {
-                    ctx.font = `${this.size}px monospace`;
-                    ctx.fillText(this.content, this.x, this.y);
-                } else {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.bubbleRadius, 0, Math.PI * 2);
-                    ctx.stroke();
-                    // Small shine reflection on bubble
-                    ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha * 0.8})`;
-                    ctx.beginPath();
-                    ctx.arc(this.x - this.bubbleRadius/3, this.y - this.bubbleRadius/3, this.bubbleRadius/5, 0, Math.PI * 2);
-                    ctx.fill();
+                const gradient = ctx.createRadialGradient(
+                    this.x - this.radius/3, this.y - this.radius/3, 1,
+                    this.x, this.y, this.radius
+                );
+                
+                const c = this.colorBase;
+                gradient.addColorStop(0, `rgba(255, 255, 255, ${this.alpha + 0.2})`);
+                gradient.addColorStop(0.6, `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${this.alpha})`);
+                gradient.addColorStop(1, `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${this.alpha + 0.1})`);
+
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = gradient;
+                ctx.fill();
+                
+                ctx.strokeStyle = `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${this.alpha + 0.2})`;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+
+                // Simple shine highlight
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha + 0.3})`;
+                ctx.beginPath();
+                ctx.arc(this.x - this.radius/2.5, this.y - this.radius/2.5, this.radius/4, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            drawPop() {
+                // Popping animation
+                ctx.strokeStyle = `rgba(${this.colorBase[0]}, ${this.colorBase[1]}, ${this.colorBase[2]}, ${1 - this.poppingStage/10})`;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius * (1 + this.poppingStage/10), 0, Math.PI * 2);
+                ctx.stroke();
+                
+                this.poppingStage++;
+                if (this.poppingStage > 10) {
+                    this.respawn();
                 }
             }
 
             update() {
-                // Return drift movement
+                if (this.poppingStage > 0) return;
+
                 this.x += this.speedX;
                 this.y += this.speedY;
 
-                // Screen boundaries recycling loop
-                if (this.y < -20) { this.y = height + 20; this.x = Math.random() * width; }
-                if (this.x < -20) this.x = width + 20;
-                if (this.x > width + 20) this.x = -20;
+                // Wall bounce (left/right)
+                if (this.x + this.radius > width || this.x - this.radius < 0) {
+                    this.speedX *= -1;
+                    this.x = this.x - this.radius < 0 ? this.radius : width - this.radius;
+                }
 
-                // Interactive Mouse/Touch avoidance behavior
-                if (mouse.x != null && mouse.y != null) {
+                // Mouse avoidance for non-sticky bubbles
+                if (!this.isSticky && mouse.x != null && mouse.y != null) {
                     let dx = mouse.x - this.x;
                     let dy = mouse.y - this.y;
                     let distance = Math.sqrt(dx * dx + dy * dy);
-                    
                     if (distance < mouse.radius) {
-                        let forceDirectionX = dx / distance;
-                        let forceDirectionY = dy / distance;
-                        let maxDistance = mouse.radius;
-                        let force = (maxDistance - distance) / maxDistance;
-                        let directionX = forceDirectionX * force * this.density;
-                        let directionY = forceDirectionY * force * this.density;
-                        
-                        this.x -= directionX;
-                        this.y -= directionY;
+                        this.speedX -= dx / distance * 0.1;
+                        this.speedY -= dy / distance * 0.1;
                     }
+                }
+                
+                // standard physics
+                this.speedX *= this.friction;
+                if (!this.isSticky && this.speedY > -1.5) this.speedY -= 0.01; // Maintain rise
+
+                // Standard bubbles pop automatically if too high (near header)
+                if (!this.isSticky && this.y < height * 0.2 && Math.random() < 0.01) {
+                    this.poppingStage = 1;
+                }
+
+                // Respawn if off screen top
+                if (this.y < -this.radius * 2) {
+                    this.respawn();
+                }
+            }
+
+            respawn() {
+                this.radius = Math.random() * (this.isSticky ? 20 : 15) + (this.isSticky ? 15 : 10);
+                this.x = Math.random() * (width - this.radius * 2) + this.radius;
+                this.y = height + this.radius * 2;
+                this.speedY = this.isSticky ? (Math.random() * -0.5 - 0.2) : (Math.random() * -1.5 - 0.5);
+                this.speedX = (Math.random() - 0.5) * (this.isSticky ? 0.3 : 1);
+                this.poppingStage = 0;
+                this.alpha = Math.random() * 0.1 + 0.15;
+            }
+        }
+
+        class StickyBubble extends Bubble {
+            constructor() {
+                super(true);
+            }
+            // Update includes group movement
+            update() {
+                if (this.poppingStage > 0) return;
+
+                this.x += this.speedX;
+                this.y += this.speedY;
+                 // standard physics
+                this.speedX *= this.friction;
+
+                // Wall bounce (left/right)
+                if (this.x + this.radius > width || this.x - this.radius < 0) {
+                    this.speedX *= -1;
+                    this.x = this.x - this.radius < 0 ? this.radius : width - this.radius;
+                }
+                
+                // Sticky bubbles don't respond to mouse or auto-pop
+
+                 // Respawn if off screen top (must check whole group later, but base check works here)
+                if (this.y < -this.radius * 2) {
+                    this.respawn();
                 }
             }
         }
 
         // Initialize elements loop
         for (let i = 0; i < particleCount; i++) {
-            particles.push(new Element());
+            // Mix: 20% sticky (pink), 80% standard (blue, poppable)
+            if (Math.random() < 0.2) {
+                particles.push(new StickyBubble());
+            } else {
+                particles.push(new Bubble());
+            }
+        }
+
+        // Sticky connection logic and drawing links
+        function handleConnections() {
+            // Find connections
+            const stickies = particles.filter(p => p.isSticky && p.poppingStage === 0);
+            
+            for (let i = 0; i < stickies.length; i++) {
+                for (let j = i + 1; j < stickies.length; j++) {
+                    const p1 = stickies[i];
+                    const p2 = stickies[j];
+                    const dx = p1.x - p2.x;
+                    const dy = p1.y - p2.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    const minDist = p1.radius + p2.radius;
+
+                    if (distance < minDist) {
+                        // Consolidate speeds (simplified physics connection)
+                        const avgSpeedX = (p1.speedX + p2.speedX) / 2;
+                        const avgSpeedY = (p1.speedY + p2.speedY) / 2;
+                        p1.speedX = p2.speedX = avgSpeedX;
+                        p1.speedY = p2.speedY = avgSpeedY;
+                        
+                        // Push apart slightly so they 'clump'
+                        const overlap = minDist - distance;
+                        p1.x += (dx / distance) * overlap * 0.1;
+                        p1.y += (dy / distance) * overlap * 0.1;
+                        p2.x -= (dx / distance) * overlap * 0.1;
+                        p2.y -= (dy / distance) * overlap * 0.1;
+
+                        // Draw connecting link (cute gooey connector)
+                        ctx.beginPath();
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(255, 182, 193, ${ (p1.alpha + p2.alpha)/2 + 0.2 })`;
+                        ctx.lineWidth = (p1.radius + p2.radius) * 0.2; // Based on bubble size
+                        ctx.lineCap = 'round';
+                        ctx.stroke();
+                    }
+                }
+            }
         }
 
         // Runtime animation rendering engine
         function animate() {
             ctx.clearRect(0, 0, width, height);
+            
+            // First draw links (so they are 'behind' bubbles)
+            handleConnections();
+
+            // Then draw bubbles
             for (let i = 0; i < particles.length; i++) {
                 particles[i].update();
                 particles[i].draw();
