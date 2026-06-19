@@ -5,27 +5,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>alankrithaa | Portfolio</title>
     <style>
-        /* General Page Setup - Dark Mode */
+        /* General Page Setup - Whimsical Light Theme */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 40px 20px;
-            background-color: #121212; /* Deep charcoal background */
-            color: #e0e0e0; /* Light gray text for readability */
+            /* Light, modern ice-blue to soft-grey gradient background */
+            background: linear-gradient(135deg, #eef2f3 0%, #dfe9f3 100%);
+            color: #333333; /* Dark gray text for readable contrast */
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Background Canvas for Interactive Particles */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none; /* Allows clicks to pass through to cards/buttons */
+        }
+
+        /* Foreground Content Wrapper to sit above the canvas */
+        .content-container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 900px;
         }
 
         h1 {
-            color: #ffffff; /* Crisp white headers */
+            color: #1a2a3a; /* Deep slate header */
             margin-bottom: 5px;
+            font-size: 2.5rem;
         }
 
         .subtitle {
-            color: #a0a0a0; /* Muted gray subtitle */
-            margin-bottom: 40px;
+            color: #5a6b7c; /* Muted slate-blue subtitle */
+            margin-bottom: 30px;
             font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        /* --- About Me Section --- */
+        .about-section {
+            background: rgba(255, 255, 255, 0.75); /* Frosted glass effect */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 16px;
+            padding: 25px 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.06);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .about-section h2 {
+            margin-top: 0;
+            color: #1a2a3a;
+            font-size: 1.4rem;
+            border-bottom: 2px solid rgba(13, 110, 253, 0.2);
+            padding-bottom: 8px;
+            display: inline-block;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 10px 20px;
+            margin-top: 15px;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .about-label {
+            font-weight: 600;
+            color: #0d6efd; /* Electric blue accent */
         }
 
         /* Container holding all project blocks vertically */
@@ -34,24 +99,24 @@
             flex-direction: column;
             gap: 35px;
             width: 100%;
-            max-width: 900px;
         }
 
         /* Horizontal Card Layout (Image beside Text) */
         .project-card {
-            background: #1e1e1e; /* Sleek dark card background */
-            border: 1px solid #2d2d2d; /* Subtle border to define the card edge */
+            background: rgba(255, 255, 255, 0.85); /* Bright crisp card background */
+            border: 1px solid rgba(255, 255, 255, 0.7); 
             border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: row; 
             overflow: hidden;
-            transition: transform 0.2s ease, border-color 0.2s ease;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
         }
 
         .project-card:hover {
-            transform: translateY(-3px);
-            border-color: #404040; /* Highlight border slightly on hover */
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border-color: rgba(13, 110, 253, 0.3); /* Subtle blue glow on hover */
         }
 
         /* Fixed size for the header images */
@@ -60,12 +125,7 @@
             height: 240px;
             object-fit: cover;
             flex-shrink: 0; 
-            opacity: 0.9; /* Slightly dim images so they blend with the dark UI */
-            transition: opacity 0.2s ease;
-        }
-
-        .project-card:hover .card-image {
-            opacity: 1.0; /* Bring image to full brightness on card hover */
+            opacity: 0.95;
         }
 
         /* Text Content Box */
@@ -78,14 +138,14 @@
         }
 
         .card-title {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             margin: 0 0 12px 0;
-            color: #ffffff;
+            color: #1a2a3a;
         }
 
         .card-description {
             font-size: 0.95rem;
-            color: #b0b0b0; /* Soft contrast text */
+            color: #555555; 
             line-height: 1.6;
             margin-bottom: 20px;
         }
@@ -106,18 +166,23 @@
             border-radius: 6px;
             font-weight: 600;
             font-size: 0.9rem;
-            transition: filter 0.2s;
+            transition: filter 0.2s, transform 0.1s;
         }
 
         .btn:hover {
-            filter: brightness(1.2); /* Brightens button states slightly on hover */
+            filter: brightness(1.08); /* Slight lift on bright elements */
+            transform: translateY(-1px);
         }
 
         /* GitHub Button specific style */
         .github-btn {
-            background-color: #333333; /* Dark gray for GitHub asset button */
-            color: #ffffff;
-            border: 1px solid #444444;
+            background-color: #e4e8ec; 
+            color: #24292f;
+            border: 1px solid #d0d7de;
+        }
+
+        .github-btn:hover {
+            background-color: #f3f4f6;
         }
 
         /* Report Button specific style */
@@ -128,6 +193,9 @@
 
         /* Responsive design: Stack elements vertically on smaller screens (phones) */
         @media (max-width: 768px) {
+            body {
+                padding: 20px 15px;
+            }
             .project-card {
                 flex-direction: column;
             }
@@ -135,66 +203,211 @@
                 width: 100%;
                 height: 200px;
             }
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <h1>Alankritha T</h1>
-    <p class="subtitle"> My projects & side quests 😎 </p>
+    <canvas id="bg-canvas"></canvas>
 
-    <div class="projects-list">
+    <div class="content-container">
 
-        <div class="project-card">
-            <img src="map_elites.jpg" alt="HT MAP-Elites Visualization" class="card-image">
-            <div class="card-content">
-                <h3 class="card-title">HT MAP-Elites</h3>
-                <p class="card-description">
-                    A MAP-Elites framework that integrates Hypothesis Testing to statistically validate quality of images stored.
-                </p>
-                <div class="btn-container">
-                    <a href="https://github.com/alankrithaa/fd_me_ht" target="_blank" class="btn github-btn">
-                        View Code
-                    </a>
-                    <a href="HT_Technical_report.pdf" target="_blank" class="btn report-btn">
-                        Tech Report (PDF)
-                    </a>
+        <h1>Alankritha T</h1>
+        <p class="subtitle">My projects & side quests 😎</p>
+
+        <section class="about-section">
+            <h2>About Me</h2>
+            <div class="about-grid">
+                <div class="about-label">Major:</div>
+                <div>Mathematical Sciences (Concentration in Statistics)</div>
+                
+                <div class="about-label">Interests:</div>
+                <div>Data Science, Statistics, NLP, Machine Learning, and leveraging AI to make everyday life just a little bit simpler.</div>
+            </div>
+        </section>
+
+        <div class="projects-list">
+
+            <div class="project-card">
+                <img src="map_elites.jpg" alt="HT MAP-Elites Visualization" class="card-image">
+                <div class="card-content">
+                    <h3 class="card-title">HT MAP-Elites</h3>
+                    <p class="card-description">
+                        A MAP-Elites framework that integrates Hypothesis Testing to statistically validate the quality of images stored.
+                    </p>
+                    <div class="btn-container">
+                        <a href="https://github.com/alankrithaa/fd_me_ht" target="_blank" class="btn github-btn">
+                            View Code
+                        </a>
+                        <a href="HT_Technical_report.pdf" target="_blank" class="btn report-btn">
+                            Tech Report (PDF)
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="project-card">
-            <img src="detect-people-object-detection.png" alt="Image Filtering Pipeline Optimization" class="card-image">
-            <div class="card-content">
-                <h3 class="card-title">Image Filtering Pipeline</h3>
-                <p class="card-description">
-                    An automated dataset curation pipeline optimized for processing, filtering, and refining person crops.
-                </p>
-                <div class="btn-container">
-                    <a href="https://github.com/alankrithaa/image_filtering_pipeline/blob/main/image_filtering_pipeline/README.md" target="_blank" class="btn github-btn">
-                        View Code
-                    </a>
+            <div class="project-card">
+                <img src="detect-people-object-detection.png" alt="Image Filtering Pipeline Optimization" class="card-image">
+                <div class="card-content">
+                    <h3 class="card-title">Image Filtering Pipeline</h3>
+                    <p class="card-description">
+                        An automated dataset curation pipeline optimized for processing, filtering, and refining person crops.
+                    </p>
+                    <div class="btn-container">
+                        <a href="https://github.com/alankrithaa/image_filtering_pipeline/blob/main/image_filtering_pipeline/README.md" target="_blank" class="btn github-btn">
+                            View Code
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Added F&b Recommendation System Project Card -->
-        <div class="project-card">
-            <img src="17485524.png" alt="F&b Recommendation System" class="card-image">
-            <div class="card-content">
-                <h3 class="card-title">F&b Recommendation System</h3>
-                <p class="card-description">
-                    A NLP semantic scoring system, and multi-criteria optimization model built to identify and rank premium F&B venues in Singapore across strategic archetypes.
-                </p>
-                <div class="btn-container">
-                    <a href="https://github.com/alankrithaa/recommendation-system" target="_blank" class="btn github-btn">
-                        View Code
-                    </a>
+            <div class="project-card">
+                <img src="17485524.png" alt="F&b Recommendation System" class="card-image">
+                <div class="card-content">
+                    <h3 class="card-title">F&b Recommendation System</h3>
+                    <p class="card-description">
+                        An NLP semantic scoring system and multi-criteria optimization model built to identify and rank premium F&B venues in Singapore across strategic archetypes.
+                    </p>
+                    <div class="btn-container">
+                        <a href="https://github.com/alankrithaa/recommendation-system" target="_blank" class="btn github-btn">
+                            View Code
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
 
+        </div>
     </div>
 
+    <script>
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        // Mouse coordinates tracker
+        const mouse = { x: null, y: null, radius: 130 };
+        
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        window.addEventListener('mouseout', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        // Handle mobile touch tracking
+        window.addEventListener('touchmove', (e) => {
+            if(e.touches.length > 0) {
+                mouse.x = e.touches[0].clientX;
+                mouse.y = e.touches[0].clientY;
+            }
+        });
+        
+        window.addEventListener('touchend', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        // Mix of math equations, coding strings, and whimsical bubbles
+        const pool = ['∑', '∫', 'μ', 'σ²', 'f(x)', 'λ', 'β', 'π', 'θ', 'ŷ', 'p-value', 'H₀', 'def', 'import', 'lambda', '[]', '{}', '()', 'f-string', 'O(n)'];
+        const particles = [];
+        const particleCount = 45;
+
+        class Element {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.type = Math.random() > 0.4 ? 'text' : 'bubble';
+                this.content = pool[Math.floor(Math.random() * pool.length)];
+                this.size = Math.random() * 12 + 12; // Base scale
+                this.bubbleRadius = Math.random() * 8 + 4;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.speedY = (Math.random() - 0.5) * 0.4 - 0.2; // slight upward drift
+                this.baseX = this.x;
+                this.baseY = this.y;
+                this.density = (Math.random() * 20) + 10;
+                this.alpha = Math.random() * 0.25 + 0.15; // Muted opacity so it doesn't distract
+            }
+
+            draw() {
+                ctx.fillStyle = `rgba(13, 110, 253, ${this.alpha})`; // Accent themed floating color
+                ctx.strokeStyle = `rgba(13, 110, 253, ${this.alpha * 0.5})`;
+                ctx.lineWidth = 1.5;
+
+                if (this.type === 'text') {
+                    ctx.font = `${this.size}px monospace`;
+                    ctx.fillText(this.content, this.x, this.y);
+                } else {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.bubbleRadius, 0, Math.PI * 2);
+                    ctx.stroke();
+                    // Small shine reflection on bubble
+                    ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha * 0.8})`;
+                    ctx.beginPath();
+                    ctx.arc(this.x - this.bubbleRadius/3, this.y - this.bubbleRadius/3, this.bubbleRadius/5, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            update() {
+                // Return drift movement
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Screen boundaries recycling loop
+                if (this.y < -20) { this.y = height + 20; this.x = Math.random() * width; }
+                if (this.x < -20) this.x = width + 20;
+                if (this.x > width + 20) this.x = -20;
+
+                // Interactive Mouse/Touch avoidance behavior
+                if (mouse.x != null && mouse.y != null) {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < mouse.radius) {
+                        let forceDirectionX = dx / distance;
+                        let forceDirectionY = dy / distance;
+                        let maxDistance = mouse.radius;
+                        let force = (maxDistance - distance) / maxDistance;
+                        let directionX = forceDirectionX * force * this.density;
+                        let directionY = forceDirectionY * force * this.density;
+                        
+                        this.x -= directionX;
+                        this.y -= directionY;
+                    }
+                }
+            }
+        }
+
+        // Initialize elements loop
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Element());
+        }
+
+        // Runtime animation rendering engine
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
 </body>
 </html>
