@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>alankrithaa | Portfolio</title>
+    <title>Alankritha T | Portfolio</title>
     <style>
-        /* General Page Setup - Whimsical Light Theme */
+        /* General Page Setup - Crisp White Theme with Soft Pastel Cards */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 40px 20px;
-            /* Light, modern ice-blue to soft-grey gradient background */
-            background: linear-gradient(135deg, #eef2f3 0%, #dfe9f3 100%);
-            color: #333333; /* Dark gray text for readable contrast */
+            background: #ffffff;
+            color: #333333;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -21,7 +20,7 @@
             overflow-x: hidden;
         }
 
-        /* Background Canvas for Interactive Particles */
+        /* Background Canvas for Interactive Pastel Interlocking Particles */
         #bg-canvas {
             position: fixed;
             top: 0;
@@ -29,10 +28,10 @@
             width: 100%;
             height: 100%;
             z-index: 0;
-            pointer-events: auto; /* Required to capture clicks/taps for popping */
+            pointer-events: auto;
         }
 
-        /* Foreground Content Wrapper to sit above the canvas */
+        /* Foreground Content Wrapper */
         .content-container {
             position: relative;
             z-index: 1;
@@ -41,37 +40,40 @@
             align-items: center;
             width: 100%;
             max-width: 900px;
-            pointer-events: none; /* Let events pass through by default */
+            pointer-events: none;
         }
 
-        /* Re-enable pointer events for interactive foreground items */
+        /* Re-enable pointer events for interactive elements */
         h1, .subtitle, .about-section, .projects-list {
             pointer-events: auto;
         }
 
         h1 {
-            color: #1a2a3a; /* Deep slate header */
+            color: #1a2a3a;
             margin-bottom: 5px;
             font-size: 2.5rem;
         }
 
         .subtitle {
-            color: #5a6b7c; /* Muted slate-blue subtitle */
+            color: #5a6b7c;
             margin-bottom: 30px;
             font-size: 1.1rem;
             font-weight: 500;
         }
 
-        /* --- About Me Section --- */
+        /* --- About Me & Custom Themed Soft Pastel Cards --- */
+        .about-section, .project-card {
+            background: rgba(255, 240, 235, 0.75); /* Modern, soft warm light pink/orange tint */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 32px rgba(235, 140, 110, 0.08);
+        }
+
         .about-section {
-            background: rgba(255, 255, 255, 0.75); /* Frosted glass effect */
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
             border-radius: 16px;
             padding: 25px 30px;
             margin-bottom: 40px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.06);
             width: 100%;
             box-sizing: border-box;
         }
@@ -96,7 +98,7 @@
 
         .about-label {
             font-weight: 600;
-            color: #0d6efd; /* Electric blue accent */
+            color: #0d6efd;
         }
 
         /* Container holding all project blocks vertically */
@@ -107,12 +109,9 @@
             width: 100%;
         }
 
-        /* Horizontal Card Layout (Image beside Text) */
+        /* Horizontal Card Layout */
         .project-card {
-            background: rgba(255, 255, 255, 0.85); /* Bright crisp card background */
-            border: 1px solid rgba(255, 255, 255, 0.7); 
             border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: row; 
             overflow: hidden;
@@ -121,8 +120,8 @@
 
         .project-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-            border-color: rgba(13, 110, 253, 0.3); /* Subtle blue glow on hover */
+            box-shadow: 0 12px 30px rgba(235, 140, 110, 0.15);
+            border-color: rgba(13, 110, 253, 0.3);
         }
 
         /* Fixed size for the header images */
@@ -151,12 +150,12 @@
 
         .card-description {
             font-size: 0.95rem;
-            color: #555555; 
+            color: #444444; 
             line-height: 1.6;
             margin-bottom: 20px;
         }
 
-        /* Flexbox wrapper for buttons */
+        /* Wrapper for buttons */
         .btn-container {
             display: flex;
             gap: 12px;
@@ -176,11 +175,10 @@
         }
 
         .btn:hover {
-            filter: brightness(1.08); /* Slight lift on bright elements */
+            filter: brightness(1.08);
             transform: translateY(-1px);
         }
 
-        /* GitHub Button specific style */
         .github-btn {
             background-color: #e4e8ec; 
             color: #24292f;
@@ -191,13 +189,12 @@
             background-color: #f3f4f6;
         }
 
-        /* Report Button specific style */
         .report-btn {
-            background-color: #0d6efd; /* Electric blue accent */
+            background-color: #0d6efd;
             color: #ffffff;
         }
 
-        /* Responsive design: Stack elements vertically on smaller screens (phones) */
+        /* Responsive Design */
         @media (max-width: 768px) {
             body {
                 padding: 20px 15px;
@@ -239,6 +236,21 @@
         <div class="projects-list">
 
             <div class="project-card">
+                <img src="butterfly.jpg" alt="Cycle Intelligence Dashboard" class="card-image">
+                <div class="card-content">
+                    <h3 class="card-title">Cycle Intelligence</h3>
+                    <p class="card-description">
+                        An end-to-end FemTech platform implementing containerized <strong>FastAPI</strong> microservices and <strong>LSTMs / Gaussian Process Regressors</strong> for robust biological cycle forecasting and deep screening diagnostics.
+                    </p>
+                    <div class="btn-container">
+                        <a href="https://github.com/alankrithaa/cycle-intelligence" target="_blank" class="btn github-btn">
+                            View Code
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
                 <img src="map_elites.jpg" alt="HT MAP-Elites Visualization" class="card-image">
                 <div class="card-content">
                     <h3 class="card-title">HT MAP-Elites</h3>
@@ -257,21 +269,6 @@
             </div>
 
             <div class="project-card">
-                <img src="detect-people-object-detection.png" alt="Image Filtering Pipeline Optimization" class="card-image">
-                <div class="card-content">
-                    <h3 class="card-title">Image Filtering Pipeline</h3>
-                    <p class="card-description">
-                        An automated dataset curation pipeline optimized for processing, filtering, and refining person crops.
-                    </p>
-                    <div class="btn-container">
-                        <a href="https://github.com/alankrithaa/image_filtering_pipeline/blob/main/image_filtering_pipeline/README.md" target="_blank" class="btn github-btn">
-                            View Code
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-card">
                 <img src="17485524.png" alt="F&B Recommendation System" class="card-image">
                 <div class="card-content">
                     <h3 class="card-title">F&B Recommendation System</h3>
@@ -280,6 +277,21 @@
                     </p>
                     <div class="btn-container">
                         <a href="https://github.com/alankrithaa/recommendation-system" target="_blank" class="btn github-btn">
+                            View Code
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <img src="detect-people-object-detection.png" alt="Image Filtering Pipeline Optimization" class="card-image">
+                <div class="card-content">
+                    <h3 class="card-title">Image Filtering Pipeline</h3>
+                    <p class="card-description">
+                        An automated dataset curation pipeline optimized for processing, filtering, and refining person crops.
+                    </p>
+                    <div class="btn-container">
+                        <a href="https://github.com/alankrithaa/image_filtering_pipeline/blob/main/image_filtering_pipeline/README.md" target="_blank" class="btn github-btn">
                             View Code
                         </a>
                     </div>
@@ -301,11 +313,16 @@
             height = canvas.height = window.innerHeight;
         });
 
-        const mouse = { x: null, y: null, radius: 100 };
+        const mouse = { x: null, y: null, radius: 120 };
         
         window.addEventListener('mousemove', (e) => {
             mouse.x = e.clientX;
             mouse.y = e.clientY;
+        });
+
+        window.addEventListener('mouseout', () => {
+            mouse.x = null;
+            mouse.y = null;
         });
 
         window.addEventListener('touchmove', (e) => {
@@ -315,7 +332,7 @@
             }
         });
 
-        // Bubbles click/tap to pop
+        // Trigger popping mechanism
         window.addEventListener('mousedown', popBubble);
         window.addEventListener('touchstart', popBubble);
 
@@ -331,41 +348,44 @@
 
             for (let i = particles.length - 1; i >= 0; i--) {
                 const p = particles[i];
-                if (!p.isSticky && p.poppingStage === 0) {
+                if (p.poppingStage === 0) {
                     const dx = clickX - p.x;
                     const dy = clickY - p.y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
                     if (distance < p.radius) {
-                        p.poppingStage = 1; // Start pop animation
-                        break; // Only pop one bubble per click
+                        p.poppingStage = 1; 
+                        break; 
                     }
                 }
             }
         }
 
+        // Palette array containing nice soft pastel colors (Light Pink, Soft Purple, Sky Blue, Muted Mint)
+        const pastelPalette = [
+            [255, 182, 193], // Soft Pink
+            [211, 194, 243], // Pastel Purple
+            [173, 216, 230], // Soft Ice Blue
+            [167, 230, 215]  // Light Mint
+        ];
+
         const particles = [];
-        const stickyGroups = []; // Array of arrays containing sticky bubbles
-        const particleCount = 60;
+        const particleCount = 35; // Lower count for an elegant, less cluttered background
 
         class Bubble {
-            constructor(isSticky = false) {
-                this.isSticky = isSticky;
-                this.radius = Math.random() * (isSticky ? 20 : 15) + (isSticky ? 15 : 10);
+            constructor() {
+                // Select a random pastel base color from our palette
+                this.colorBase = pastelPalette[Math.floor(Math.random() * pastelPalette.length)];
+                this.radius = Math.random() * 20 + 15;
                 this.x = Math.random() * (width - this.radius * 2) + this.radius;
-                this.y = isSticky ? height + this.radius * 2 : height + this.radius; // Spawn off screen bottom
+                this.y = Math.random() * (height) + height * 0.2; // Distribute across vertical space initially
                 
-                // Physics
-                this.speedY = isSticky ? (Math.random() * -0.5 - 0.2) : (Math.random() * -1.5 - 0.5); // Rise speed
-                this.speedX = (Math.random() - 0.5) * (isSticky ? 0.3 : 1);
-                this.friction = 0.99;
+                // Physics and floating parameters
+                this.speedY = Math.random() * -0.6 - 0.2;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.friction = 0.98;
+                this.alpha = Math.random() * 0.12 + 0.15; // Delicate opacity
                 
-                // Visuals
-                this.colorBase = isSticky ? [255, 182, 193] : [13, 110, 253]; // Pink sticky, blue standard
-                this.alpha = Math.random() * 0.1 + 0.15; // Muted opacity
-                
-                // Interactions
-                this.poppingStage = 0; // 0: alive, 1+: animated popping
-                this.connections = []; // Indices of connected sticky bubbles
+                this.poppingStage = 0;
             }
 
             draw() {
@@ -380,20 +400,20 @@
                 );
                 
                 const c = this.colorBase;
-                gradient.addColorStop(0, `rgba(255, 255, 255, ${this.alpha + 0.2})`);
+                gradient.addColorStop(0, `rgba(255, 255, 255, ${this.alpha + 0.25})`);
                 gradient.addColorStop(0.6, `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${this.alpha})`);
-                gradient.addColorStop(1, `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${this.alpha + 0.1})`);
+                gradient.addColorStop(1, `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${this.alpha + 0.15})`);
 
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
                 ctx.fillStyle = gradient;
                 ctx.fill();
                 
-                ctx.strokeStyle = `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${this.alpha + 0.2})`;
+                ctx.strokeStyle = `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${this.alpha + 0.25})`;
                 ctx.lineWidth = 1;
                 ctx.stroke();
 
-                // Simple shine highlight
+                // Soft specular accent sheen
                 ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha + 0.3})`;
                 ctx.beginPath();
                 ctx.arc(this.x - this.radius/2.5, this.y - this.radius/2.5, this.radius/4, 0, Math.PI * 2);
@@ -401,7 +421,6 @@
             }
 
             drawPop() {
-                // Popping animation
                 ctx.strokeStyle = `rgba(${this.colorBase[0]}, ${this.colorBase[1]}, ${this.colorBase[2]}, ${1 - this.poppingStage/10})`;
                 ctx.lineWidth = 2;
                 ctx.beginPath();
@@ -420,121 +439,76 @@
                 this.x += this.speedX;
                 this.y += this.speedY;
 
-                // Wall bounce (left/right)
+                // Wall boundary checks
                 if (this.x + this.radius > width || this.x - this.radius < 0) {
                     this.speedX *= -1;
                     this.x = this.x - this.radius < 0 ? this.radius : width - this.radius;
                 }
 
-                // Mouse avoidance for non-sticky bubbles
-                if (!this.isSticky && mouse.x != null && mouse.y != null) {
+                // Fluid mouse interactive evasion / nudge response
+                if (mouse.x != null && mouse.y != null) {
                     let dx = mouse.x - this.x;
                     let dy = mouse.y - this.y;
                     let distance = Math.sqrt(dx * dx + dy * dy);
                     if (distance < mouse.radius) {
-                        this.speedX -= dx / distance * 0.1;
-                        this.speedY -= dy / distance * 0.1;
+                        this.speedX -= dx / distance * 0.08;
+                        this.speedY -= dy / distance * 0.08;
                     }
                 }
                 
-                // standard physics
                 this.speedX *= this.friction;
-                if (!this.isSticky && this.speedY > -1.5) this.speedY -= 0.01; // Maintain rise
+                if (this.speedY > -0.8) this.speedY -= 0.005; 
 
-                // Standard bubbles pop automatically if too high (near header)
-                if (!this.isSticky && this.y < height * 0.2 && Math.random() < 0.01) {
-                    this.poppingStage = 1;
-                }
-
-                // Respawn if off screen top
+                // Automatically loop to bottom if floats off screen top
                 if (this.y < -this.radius * 2) {
                     this.respawn();
                 }
             }
 
             respawn() {
-                this.radius = Math.random() * (this.isSticky ? 20 : 15) + (this.isSticky ? 15 : 10);
+                this.colorBase = pastelPalette[Math.floor(Math.random() * pastelPalette.length)];
+                this.radius = Math.random() * 20 + 15;
                 this.x = Math.random() * (width - this.radius * 2) + this.radius;
                 this.y = height + this.radius * 2;
-                this.speedY = this.isSticky ? (Math.random() * -0.5 - 0.2) : (Math.random() * -1.5 - 0.5);
-                this.speedX = (Math.random() - 0.5) * (this.isSticky ? 0.3 : 1);
+                this.speedY = Math.random() * -0.6 - 0.2;
+                this.speedX = (Math.random() - 0.5) * 0.4;
                 this.poppingStage = 0;
-                this.alpha = Math.random() * 0.1 + 0.15;
+                this.alpha = Math.random() * 0.12 + 0.15;
             }
         }
 
-        class StickyBubble extends Bubble {
-            constructor() {
-                super(true);
-            }
-            // Update includes group movement
-            update() {
-                if (this.poppingStage > 0) return;
-
-                this.x += this.speedX;
-                this.y += this.speedY;
-                 // standard physics
-                this.speedX *= this.friction;
-
-                // Wall bounce (left/right)
-                if (this.x + this.radius > width || this.x - this.radius < 0) {
-                    this.speedX *= -1;
-                    this.x = this.x - this.radius < 0 ? this.radius : width - this.radius;
-                }
-                
-                // Sticky bubbles don't respond to mouse or auto-pop
-
-                 // Respawn if off screen top (must check whole group later, but base check works here)
-                if (this.y < -this.radius * 2) {
-                    this.respawn();
-                }
-            }
-        }
-
-        // Initialize elements loop
+        // Initialize bubbles array
         for (let i = 0; i < particleCount; i++) {
-            // Mix: 20% sticky (pink), 80% standard (blue, poppable)
-            if (Math.random() < 0.2) {
-                particles.push(new StickyBubble());
-            } else {
-                particles.push(new Bubble());
-            }
+            particles.push(new Bubble());
         }
 
-        // Sticky connection logic and drawing links
+        // Interconnected sticky layout rendering engine
         function handleConnections() {
-            // Find connections
-            const stickies = particles.filter(p => p.isSticky && p.poppingStage === 0);
+            const activeBubbles = particles.filter(p => p.poppingStage === 0);
             
-            for (let i = 0; i < stickies.length; i++) {
-                for (let j = i + 1; j < stickies.length; j++) {
-                    const p1 = stickies[i];
-                    const p2 = stickies[j];
+            for (let i = 0; i < activeBubbles.length; i++) {
+                for (let j = i + 1; j < activeBubbles.length; j++) {
+                    const p1 = activeBubbles[i];
+                    const p2 = activeBubbles[j];
                     const dx = p1.x - p2.x;
                     const dy = p1.y - p2.y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
-                    const minDist = p1.radius + p2.radius;
+                    const minDist = p1.radius + p2.radius + 15; // Connects if nudged nearby
 
                     if (distance < minDist) {
-                        // Consolidate speeds (simplified physics connection)
+                        // Smoothly average speeds when connected to float together organicly
                         const avgSpeedX = (p1.speedX + p2.speedX) / 2;
                         const avgSpeedY = (p1.speedY + p2.speedY) / 2;
                         p1.speedX = p2.speedX = avgSpeedX;
                         p1.speedY = p2.speedY = avgSpeedY;
-                        
-                        // Push apart slightly so they 'clump'
-                        const overlap = minDist - distance;
-                        p1.x += (dx / distance) * overlap * 0.1;
-                        p1.y += (dy / distance) * overlap * 0.1;
-                        p2.x -= (dx / distance) * overlap * 0.1;
-                        p2.y -= (dy / distance) * overlap * 0.1;
 
-                        // Draw connecting link (cute gooey connector)
+                        // Unified structural gooey line link color
+                        const lineAlpha = (1 - (distance / minDist)) * 0.22;
                         ctx.beginPath();
                         ctx.moveTo(p1.x, p1.y);
                         ctx.lineTo(p2.x, p2.y);
-                        ctx.strokeStyle = `rgba(255, 182, 193, ${ (p1.alpha + p2.alpha)/2 + 0.2 })`;
-                        ctx.lineWidth = (p1.radius + p2.radius) * 0.2; // Based on bubble size
+                        ctx.strokeStyle = `rgba(${(p1.colorBase[0]+p2.colorBase[0])/2}, ${(p1.colorBase[1]+p2.colorBase[1])/2}, ${(p1.colorBase[2]+p2.colorBase[2])/2}, ${lineAlpha})`;
+                        ctx.lineWidth = (p1.radius + p2.radius) * 0.12; 
                         ctx.lineCap = 'round';
                         ctx.stroke();
                     }
@@ -542,14 +516,14 @@
             }
         }
 
-        // Runtime animation rendering engine
+        // Core animation rendering routine
         function animate() {
             ctx.clearRect(0, 0, width, height);
             
-            // First draw links (so they are 'behind' bubbles)
+            // Render connecting gooey linkages behind main objects
             handleConnections();
 
-            // Then draw bubbles
+            // Handle objects updating and drawing
             for (let i = 0; i < particles.length; i++) {
                 particles[i].update();
                 particles[i].draw();
