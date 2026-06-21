@@ -235,21 +235,26 @@
 
         <div class="projects-list">
 
+            <!-- 1. Cycle Intelligence -->
             <div class="project-card">
                 <img src="butterfly.jpg" alt="Cycle Intelligence Dashboard" class="card-image">
                 <div class="card-content">
                     <h3 class="card-title">Cycle Intelligence</h3>
                     <p class="card-description">
-                        An end-to-end FemTech platform implementing containerized <strong>FastAPI</strong> microservices and <strong>LSTMs / Gaussian Process Regressors</strong> for robust biological cycle forecasting and deep screening diagnostics.
+                        An end-to-end FemTech platform featuring an interactive <strong>Streamlit</strong> frontend decoupled from containerized <strong>FastAPI</strong> microservices, leveraging <strong>LSTMs and Gaussian Process Regressors</strong> for robust biological cycle forecasting and deep screening diagnostics.
                     </p>
                     <div class="btn-container">
                         <a href="https://github.com/alankrithaa/cycle-intelligence" target="_blank" class="btn github-btn">
                             View Code
                         </a>
+                        <a href="https://my-cycle-companion.streamlit.app/" target="_blank" class="btn report-btn">
+                            Live App
+                        </a>
                     </div>
                 </div>
             </div>
 
+            <!-- 2. HT MAP-Elites -->
             <div class="project-card">
                 <img src="map_elites.jpg" alt="HT MAP-Elites Visualization" class="card-image">
                 <div class="card-content">
@@ -268,8 +273,9 @@
                 </div>
             </div>
 
+            <!-- 3. F&B Recommendation System -->
             <div class="project-card">
-                <img src="17485524.png" alt="F&B Recommendation System" class="card-image">
+                <img src="thumbs.png" alt="F&B Recommendation System" class="card-image">
                 <div class="card-content">
                     <h3 class="card-title">F&B Recommendation System</h3>
                     <p class="card-description">
@@ -283,6 +289,7 @@
                 </div>
             </div>
 
+            <!-- 4. Image Filtering Pipeline -->
             <div class="project-card">
                 <img src="detect-people-object-detection.png" alt="Image Filtering Pipeline Optimization" class="card-image">
                 <div class="card-content">
@@ -496,7 +503,7 @@
                     const minDist = p1.radius + p2.radius + 15; // Connects if nudged nearby
 
                     if (distance < minDist) {
-                        // Smoothly average speeds when connected to float together organicly
+                        // Smoothly average speeds when connected to float together organically
                         const avgSpeedX = (p1.speedX + p2.speedX) / 2;
                         const avgSpeedY = (p1.speedY + p2.speedY) / 2;
                         p1.speedX = p2.speedX = avgSpeedX;
