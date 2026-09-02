@@ -57,13 +57,13 @@
             font-weight: 500;
         }
 
-        /* Glassmorphism Pastel Container Cards */
+        /* Glassmorphism Pastel Pink-Lavender Container Cards */
         .about-section, .collapsible-section {
-            background: rgba(255, 240, 235, 0.78);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.85);
-            box-shadow: 0 8px 32px rgba(235, 140, 110, 0.08);
+            background: rgba(248, 230, 244, 0.82);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 8px 32px rgba(210, 150, 205, 0.14);
             border-radius: 16px;
             width: 100%;
             box-sizing: border-box;
@@ -136,15 +136,21 @@
             padding: 10px 30px 30px 30px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 16px;
         }
 
-        /* Compact Experience & Side Quest Cards */
+        /* Experience & Quest Cards */
         .simple-card {
-            background: rgba(255, 255, 255, 0.65);
+            background: rgba(255, 255, 255, 0.72);
             border-radius: 12px;
             padding: 16px 20px;
-            border: 1px solid rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.95);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .simple-card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -161,31 +167,29 @@
         .simple-tag {
             font-size: 0.85rem;
             color: #5a6b7c;
-            font-style: italic;
         }
 
-        .quest-desc {
-            font-size: 0.92rem;
-            color: #444444;
+        .job-desc {
+            font-size: 0.88rem;
+            color: #4a4a4a;
             line-height: 1.5;
-            margin-top: 6px;
-            width: 100%;
+            margin: 0;
         }
 
         /* Project Horizontal Cards */
         .project-card {
-            background: rgba(255, 255, 255, 0.65);
+            background: rgba(255, 255, 255, 0.72);
             border-radius: 12px;
             display: flex;
             flex-direction: row;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.95);
             transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
 
         .project-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 24px rgba(235, 140, 110, 0.15);
+            box-shadow: 0 10px 24px rgba(210, 150, 205, 0.2);
         }
 
         .card-image {
@@ -278,38 +282,6 @@
             </div>
         </section>
 
-        <details class="collapsible-section" open>
-            <summary>Work Experience</summary>
-            <div class="section-body">
-                <div class="simple-card">
-                    <span class="simple-title">Data Science Intern @ Synthesis</span>
-                    <span class="simple-tag">(current)</span>
-                </div>
-
-                <div class="simple-card">
-                    <span class="simple-title">AI Engineer Intern @ Income Insurance</span>
-                </div>
-
-                <div class="simple-card">
-                    <span class="simple-title">Income Tax Assistant @ IRAS</span>
-                </div>
-
-                <div class="simple-card">
-                    <span class="simple-title">Digital Ambassador @ M1</span>
-                </div>
-
-                <div class="simple-card">
-                    <span class="simple-title">Swimming Pool Operator</span>
-                    <span class="simple-tag">(the quirkiest)</span>
-                </div>
-
-                <div class="simple-card">
-                    <span class="simple-title">Event Ambassador</span>
-                    <span class="simple-tag">(for a bunch of events)</span>
-                </div>
-            </div>
-        </details>
-
         <details class="collapsible-section">
             <summary>Projects</summary>
             <div class="section-body">
@@ -364,20 +336,75 @@
         </details>
 
         <details class="collapsible-section">
-            <summary>Side Quests</summary>
+            <summary>Work Experience</summary>
             <div class="section-body">
-                <div class="simple-card" style="flex-direction: column; align-items: flex-start;">
-                    <span class="simple-title">Hackathon Mentor & Technical Evaluator @ NTU Deep Learning Week Hackathon</span>
-                    <span class="quest-desc">Evaluated submissions & code quality, designed an AI for Education track.</span>
-                </div>
-
-                <div class="simple-card" style="flex-direction: column; align-items: flex-start;">
-                    <span class="simple-title">Communications & Telemetry Lead @ Archimedes Autonomous Vehicles</span>
-                    <span class="quest-desc">Working with ROS2 and real-time data transfer.</span>
+                <div class="simple-card">
+                    <div class="simple-card-header">
+                        <span class="simple-title">Data Science Intern @ Synthesis</span>
+                        <span class="simple-tag">(current)</span>
+                    </div>
+                    <p class="job-desc">working with large social datasets, dagster pipelines and cluster analysis.</p>
                 </div>
 
                 <div class="simple-card">
-                    <span class="simple-title">NTU Women in Tech Mentorship Programme</span>
+                    <div class="simple-card-header">
+                        <span class="simple-title">AI Engineer Intern @ Income Insurance</span>
+                    </div>
+                    <p class="job-desc">developed an automated PII masking system with LLM, hugging face & regex fallbacks! also drank so much chai in this internship.</p>
+                </div>
+
+                <div class="simple-card">
+                    <div class="simple-card-header">
+                        <span class="simple-title">Income Tax Assistant @ IRAS</span>
+                    </div>
+                    <p class="job-desc">good few months of learning foundations of tax in singapore, learnt all the reliefs, attended to customer queries everyday through portal to grant/revoke/amend tax statements, and ended up getting income tax assistant of the month before leaving! (who would've thought).</p>
+                </div>
+
+                <div class="simple-card">
+                    <div class="simple-card-header">
+                        <span class="simple-title">Digital Ambassador @ M1</span>
+                    </div>
+                    <p class="job-desc">first job after A's - learnt a lot about workplace rules and ethics, got good exposure to how different customers can be, had a lot of fun too!</p>
+                </div>
+
+                <div class="simple-card">
+                    <div class="simple-card-header">
+                        <span class="simple-title">Swimming Pool Operator @ ActiveSG</span>
+                        <span class="simple-tag">(the quirkiest)</span>
+                    </div>
+                    <p class="job-desc">quirkiest job i've done so far, very cute experience with a nice touch of safety training.</p>
+                </div>
+
+                <div class="simple-card">
+                    <div class="simple-card-header">
+                        <span class="simple-title">Event Ambassador @ Many Events</span>
+                    </div>
+                    <p class="job-desc">exposed to so many new environments (eg national day, mall events, game events for kids etc)</p>
+                </div>
+            </div>
+        </details>
+
+        <details class="collapsible-section">
+            <summary>Side Quests</summary>
+            <div class="section-body">
+                <div class="simple-card">
+                    <div class="simple-card-header">
+                        <span class="simple-title">Hackathon Mentor & Technical Evaluator @ NTU Deep Learning Week Hackathon</span>
+                    </div>
+                    <p class="job-desc">Evaluated submissions & code quality, designed an AI for Education track.</p>
+                </div>
+
+                <div class="simple-card">
+                    <div class="simple-card-header">
+                        <span class="simple-title">Communications & Telemetry Lead @ Archimedes Autonomous Vehicles</span>
+                    </div>
+                    <p class="job-desc">Working with ROS2 and real-time data transfer.</p>
+                </div>
+
+                <div class="simple-card">
+                    <div class="simple-card-header">
+                        <span class="simple-title">NTU Women in Tech Mentorship Programme</span>
+                    </div>
                 </div>
             </div>
         </details>
@@ -436,10 +463,10 @@
         }
 
         const pastelPalette = [
-            [255, 182, 193], // Soft Pink
-            [211, 194, 243], // Pastel Purple
-            [173, 216, 230], // Soft Ice Blue
-            [167, 230, 215]  // Muted Mint
+            [255, 175, 204], // Rose Pink
+            [216, 187, 255], // Soft Lavender
+            [184, 192, 255], // Periwinkle Blue
+            [170, 227, 218]  // Muted Mint
         ];
 
         let particles = [];
@@ -455,7 +482,8 @@
                 this.speedY = Math.random() * -0.6 - 0.2;
                 this.speedX = (Math.random() - 0.5) * 0.4;
                 this.friction = 0.985;
-                this.alpha = Math.random() * 0.12 + 0.15;
+                // Higher opacity range
+                this.alpha = Math.random() * 0.15 + 0.45;
                 this.poppingStage = 0;
             }
 
@@ -471,29 +499,29 @@
                 );
 
                 const c = this.colorBase;
-                gradient.addColorStop(0, `rgba(255, 255, 255, ${this.alpha + 0.28})`);
-                gradient.addColorStop(0.6, `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${this.alpha})`);
-                gradient.addColorStop(1, `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${this.alpha + 0.18})`);
+                gradient.addColorStop(0, `rgba(255, 255, 255, ${Math.min(1, this.alpha + 0.35)})`);
+                gradient.addColorStop(0.55, `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${this.alpha})`);
+                gradient.addColorStop(1, `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${Math.min(1, this.alpha + 0.2)})`);
 
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
                 ctx.fillStyle = gradient;
                 ctx.fill();
 
-                ctx.strokeStyle = `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${this.alpha + 0.3})`;
-                ctx.lineWidth = 1;
+                ctx.strokeStyle = `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${Math.min(1, this.alpha + 0.35)})`;
+                ctx.lineWidth = 1.5;
                 ctx.stroke();
 
-                // Sheen
-                ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha + 0.35})`;
+                // Distinct specular sheen
+                ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(1, this.alpha + 0.4)})`;
                 ctx.beginPath();
-                ctx.arc(this.x - this.radius / 2.5, this.y - this.radius / 2.5, this.radius / 4.2, 0, Math.PI * 2);
+                ctx.arc(this.x - this.radius / 2.5, this.y - this.radius / 2.5, this.radius / 4, 0, Math.PI * 2);
                 ctx.fill();
             }
 
             drawPop() {
                 ctx.strokeStyle = `rgba(${this.colorBase[0]}, ${this.colorBase[1]}, ${this.colorBase[2]}, ${1 - this.poppingStage / 10})`;
-                ctx.lineWidth = 2;
+                ctx.lineWidth = 2.5;
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius * (1 + this.poppingStage / 10), 0, Math.PI * 2);
                 ctx.stroke();
@@ -510,19 +538,17 @@
                 this.x += this.speedX;
                 this.y += this.speedY;
 
-                // Wall bounds
                 if (this.x + this.radius > width || this.x - this.radius < 0) {
                     this.speedX *= -1;
                     this.x = this.x - this.radius < 0 ? this.radius : width - this.radius;
                 }
 
-                // Interactive cursor nudging
                 if (mouse.x !== null && mouse.y !== null) {
                     let dx = mouse.x - this.x;
                     let dy = mouse.y - this.y;
                     let dist = Math.sqrt(dx * dx + dy * dy);
                     if (dist < mouse.radius) {
-                        let force = (1 - dist / mouse.radius) * 0.22;
+                        let force = (1 - dist / mouse.radius) * 0.24;
                         this.speedX -= (dx / dist) * force;
                         this.speedY -= (dy / dist) * force;
                     }
@@ -544,7 +570,7 @@
                 this.speedY = Math.random() * -0.6 - 0.2;
                 this.speedX = (Math.random() - 0.5) * 0.4;
                 this.poppingStage = 0;
-                this.alpha = Math.random() * 0.12 + 0.15;
+                this.alpha = Math.random() * 0.15 + 0.45;
             }
         }
 
@@ -552,7 +578,6 @@
             particles.push(new Bubble());
         }
 
-        // Handle collision merging & sticky bridges
         function handleInteractions() {
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i + 1; j < particles.length; j++) {
@@ -584,7 +609,7 @@
                         continue;
                     }
 
-                    // Soft interconnection gooey link
+                    // Interconnection bridge
                     const connectDist = touchDist + 22;
                     if (distance < connectDist) {
                         const avgSpeedX = (p1.speedX + p2.speedX) / 2;
@@ -592,12 +617,12 @@
                         p1.speedX = p2.speedX = avgSpeedX;
                         p1.speedY = p2.speedY = avgSpeedY;
 
-                        const lineAlpha = (1 - (distance / connectDist)) * 0.22;
+                        const lineAlpha = (1 - (distance / connectDist)) * 0.38;
                         ctx.beginPath();
                         ctx.moveTo(p1.x, p1.y);
                         ctx.lineTo(p2.x, p2.y);
                         ctx.strokeStyle = `rgba(${(p1.colorBase[0] + p2.colorBase[0]) / 2}, ${(p1.colorBase[1] + p2.colorBase[1]) / 2}, ${(p1.colorBase[2] + p2.colorBase[2]) / 2}, ${lineAlpha})`;
-                        ctx.lineWidth = (p1.radius + p2.radius) * 0.12;
+                        ctx.lineWidth = (p1.radius + p2.radius) * 0.14;
                         ctx.lineCap = 'round';
                         ctx.stroke();
                     }
