@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alankritha T | Portfolio</title>
     <style>
-        /* General Page Setup - Crisp White Theme with Soft Pastel Cards */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
@@ -20,7 +19,6 @@
             overflow-x: hidden;
         }
 
-        /* Background Canvas for Interactive Pastel Interlocking Particles */
         #bg-canvas {
             position: fixed;
             top: 0;
@@ -31,7 +29,6 @@
             pointer-events: auto;
         }
 
-        /* Foreground Content Wrapper */
         .content-container {
             position: relative;
             z-index: 1;
@@ -43,8 +40,7 @@
             pointer-events: none;
         }
 
-        /* Re-enable pointer events for interactive elements */
-        h1, .subtitle, .about-section, .projects-list {
+        h1, .subtitle, .about-section, .collapsible-section {
             pointer-events: auto;
         }
 
@@ -56,26 +52,26 @@
 
         .subtitle {
             color: #5a6b7c;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             font-size: 1.1rem;
             font-weight: 500;
         }
 
-        /* --- About Me & Custom Themed Soft Pastel Cards --- */
-        .about-section, .project-card {
-            background: rgba(255, 240, 235, 0.75); /* Modern, soft warm light pink/orange tint */
+        /* Glassmorphism Pastel Container Cards */
+        .about-section, .collapsible-section {
+            background: rgba(255, 240, 235, 0.78);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.85);
             box-shadow: 0 8px 32px rgba(235, 140, 110, 0.08);
+            border-radius: 16px;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 25px;
         }
 
         .about-section {
-            border-radius: 16px;
             padding: 25px 30px;
-            margin-bottom: 40px;
-            width: 100%;
-            box-sizing: border-box;
         }
 
         .about-section h2 {
@@ -101,76 +97,139 @@
             color: #0d6efd;
         }
 
-        /* Container holding all project blocks vertically */
-        .projects-list {
+        /* Collapsible Accordion Elements */
+        details.collapsible-section {
+            padding: 0;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 22px 30px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1a2a3a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: '＋';
+            font-size: 1.4rem;
+            color: #0d6efd;
+            transition: transform 0.25s ease;
+        }
+
+        details[open] summary::after {
+            content: '–';
+        }
+
+        .section-body {
+            padding: 10px 30px 30px 30px;
             display: flex;
             flex-direction: column;
-            gap: 35px;
+            gap: 15px;
+        }
+
+        /* Compact Experience & Side Quest Cards */
+        .simple-card {
+            background: rgba(255, 255, 255, 0.65);
+            border-radius: 12px;
+            padding: 16px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .simple-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #1a2a3a;
+        }
+
+        .simple-tag {
+            font-size: 0.85rem;
+            color: #5a6b7c;
+            font-style: italic;
+        }
+
+        .quest-desc {
+            font-size: 0.92rem;
+            color: #444444;
+            line-height: 1.5;
+            margin-top: 6px;
             width: 100%;
         }
 
-        /* Horizontal Card Layout */
+        /* Project Horizontal Cards */
         .project-card {
+            background: rgba(255, 255, 255, 0.65);
             border-radius: 12px;
             display: flex;
-            flex-direction: row; 
+            flex-direction: row;
             overflow: hidden;
-            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
 
         .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(235, 140, 110, 0.15);
-            border-color: rgba(13, 110, 253, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 24px rgba(235, 140, 110, 0.15);
         }
 
-        /* Fixed size for the header images */
         .card-image {
-            width: 380px;
-            height: 240px;
+            width: 320px;
+            height: 210px;
             object-fit: cover;
-            flex-shrink: 0; 
-            opacity: 0.95;
+            flex-shrink: 0;
         }
 
-        /* Text Content Box */
         .card-content {
-            padding: 25px;
+            padding: 20px 24px;
             display: flex;
             flex-direction: column;
-            justify-content: center; 
+            justify-content: center;
             flex-grow: 1;
         }
 
         .card-title {
-            font-size: 1.4rem;
-            margin: 0 0 12px 0;
+            font-size: 1.25rem;
+            margin: 0 0 8px 0;
             color: #1a2a3a;
         }
 
         .card-description {
-            font-size: 0.95rem;
-            color: #444444; 
-            line-height: 1.6;
-            margin-bottom: 20px;
+            font-size: 0.92rem;
+            color: #444444;
+            line-height: 1.55;
+            margin-bottom: 16px;
         }
 
-        /* Wrapper for buttons */
         .btn-container {
             display: flex;
-            gap: 12px;
+            gap: 10px;
         }
 
-        /* Button Styling */
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 10px 20px;
+            padding: 8px 16px;
             text-decoration: none;
             border-radius: 6px;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             transition: filter 0.2s, transform 0.1s;
         }
 
@@ -180,13 +239,9 @@
         }
 
         .github-btn {
-            background-color: #e4e8ec; 
+            background-color: #e4e8ec;
             color: #24292f;
             border: 1px solid #d0d7de;
-        }
-
-        .github-btn:hover {
-            background-color: #f3f4f6;
         }
 
         .report-btn {
@@ -194,22 +249,13 @@
             color: #ffffff;
         }
 
-        /* Responsive Design */
         @media (max-width: 768px) {
-            body {
-                padding: 20px 15px;
-            }
-            .project-card {
-                flex-direction: column;
-            }
-            .card-image {
-                width: 100%;
-                height: 200px;
-            }
-            .about-grid {
-                grid-template-columns: 1fr;
-                gap: 5px;
-            }
+            body { padding: 20px 15px; }
+            .project-card { flex-direction: column; }
+            .card-image { width: 100%; height: 180px; }
+            .about-grid { grid-template-columns: 1fr; gap: 4px; }
+            summary { padding: 18px 20px; font-size: 1.15rem; }
+            .section-body { padding: 5px 15px 20px 15px; }
         }
     </style>
 </head>
@@ -218,7 +264,6 @@
     <canvas id="bg-canvas"></canvas>
 
     <div class="content-container">
-
         <h1>Alankritha T</h1>
         <p class="subtitle"></p>
 
@@ -227,85 +272,116 @@
             <div class="about-grid">
                 <div class="about-label">Major:</div>
                 <div>Mathematical Sciences (Concentration in Statistics)</div>
-                
+
                 <div class="about-label">Interests:</div>
-                <div>Data Science, Machine Learning (especially NLP!) and leveraging AI to make everyday life just a little bit simpler.</div>
+                <div>Data Science & Analytics, Machine Learning (especially NLP!), Artificial Intelligence.</div>
             </div>
         </section>
 
-        <div class="projects-list">
+        <details class="collapsible-section" open>
+            <summary>Work Experience</summary>
+            <div class="section-body">
+                <div class="simple-card">
+                    <span class="simple-title">Data Science Intern @ Synthesis</span>
+                    <span class="simple-tag">(current)</span>
+                </div>
 
-            <!-- 1. Cycle Intelligence -->
-            <div class="project-card">
-                <img src="butterfly.jpg" alt="Cycle Intelligence Dashboard" class="card-image">
-                <div class="card-content">
-                    <h3 class="card-title">Cycle Intelligence</h3>
-                    <p class="card-description">
-                        An end-to-end FemTech platform built by leveraging LSTMs and Gaussian Process Regressors for robust biological cycle forecasting and deep screening diagnostics.
-                    </p>
-                    <div class="btn-container">
-                        <a href="https://github.com/alankrithaa/cycle-intelligence" target="_blank" class="btn github-btn">
-                            View Code
-                        </a>
-                        <a href="https://my-cycle-companion.streamlit.app/" target="_blank" class="btn report-btn">
-                            Live Website
-                        </a>
-                    </div>
+                <div class="simple-card">
+                    <span class="simple-title">AI Engineer Intern @ Income Insurance</span>
+                </div>
+
+                <div class="simple-card">
+                    <span class="simple-title">Income Tax Assistant @ IRAS</span>
+                </div>
+
+                <div class="simple-card">
+                    <span class="simple-title">Digital Ambassador @ M1</span>
+                </div>
+
+                <div class="simple-card">
+                    <span class="simple-title">Swimming Pool Operator</span>
+                    <span class="simple-tag">(the quirkiest)</span>
+                </div>
+
+                <div class="simple-card">
+                    <span class="simple-title">Event Ambassador</span>
+                    <span class="simple-tag">(for a bunch of events)</span>
                 </div>
             </div>
+        </details>
 
-            <!-- 2. HT MAP-Elites -->
-            <div class="project-card">
-                <img src="graph.png" alt="HT MAP-Elites Visualization" class="card-image">
-                <div class="card-content">
-                    <h3 class="card-title">HT MAP-Elites</h3>
-                    <p class="card-description">
-                        A MAP-Elites framework that integrates Hypothesis Testing to statistically validate the quality of images stored.
-                    </p>
-                    <div class="btn-container">
-                        <a href="https://github.com/alankrithaa/fd_me_ht" target="_blank" class="btn github-btn">
-                            View Code
-                        </a>
-                        <a href="HT_Technical_report.pdf" target="_blank" class="btn report-btn">
-                            Tech Report (PDF)
-                        </a>
+        <details class="collapsible-section">
+            <summary>Projects</summary>
+            <div class="section-body">
+                
+                <div class="project-card">
+                    <img src="butterfly.jpg" alt="Cycle Intelligence Dashboard" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">Cycle Intelligence</h3>
+                        <p class="card-description">An end-to-end FemTech platform built by leveraging LSTMs and Gaussian Process Regressors for robust biological cycle forecasting and deep screening diagnostics.</p>
+                        <div class="btn-container">
+                            <a href="https://github.com/alankrithaa/cycle-intelligence" target="_blank" class="btn github-btn">View Code</a>
+                            <a href="https://my-cycle-companion.streamlit.app/" target="_blank" class="btn report-btn">Live Website</a>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- 3. F&B Recommendation System -->
-            <div class="project-card">
-                <img src="thumbs.png" alt="F&B Recommendation System" class="card-image">
-                <div class="card-content">
-                    <h3 class="card-title">F&B Recommendation System</h3>
-                    <p class="card-description">
-                        An NLP semantic scoring system and multi-criteria optimization model built to identify and rank premium F&B venues in Singapore across strategic archetypes.
-                    </p>
-                    <div class="btn-container">
-                        <a href="https://github.com/alankrithaa/recommendation-system" target="_blank" class="btn github-btn">
-                            View Code
-                        </a>
+                <div class="project-card">
+                    <img src="graph.png" alt="HT MAP-Elites Visualization" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">HT MAP-Elites</h3>
+                        <p class="card-description">A MAP-Elites framework that integrates Hypothesis Testing to statistically validate the quality of images stored.</p>
+                        <div class="btn-container">
+                            <a href="https://github.com/alankrithaa/fd_me_ht" target="_blank" class="btn github-btn">View Code</a>
+                            <a href="HT_Technical_report.pdf" target="_blank" class="btn report-btn">Tech Report (PDF)</a>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- 4. Image Filtering Pipeline -->
-            <div class="project-card">
-                <img src="detect-people-object-detection.png" alt="Image Filtering Pipeline Optimization" class="card-image">
-                <div class="card-content">
-                    <h3 class="card-title">Image Filtering Pipeline</h3>
-                    <p class="card-description">
-                        An automated dataset curation pipeline optimized for processing, filtering, and refining person crops.
-                    </p>
-                    <div class="btn-container">
-                        <a href="https://github.com/alankrithaa/image_filtering_pipeline/blob/main/image_filtering_pipeline/README.md" target="_blank" class="btn github-btn">
-                            View Code
-                        </a>
+                <div class="project-card">
+                    <img src="thumbs.png" alt="F&B Recommendation System" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">F&B Recommendation System</h3>
+                        <p class="card-description">An NLP semantic scoring system and multi-criteria optimization model built to identify and rank premium F&B venues in Singapore across strategic archetypes.</p>
+                        <div class="btn-container">
+                            <a href="https://github.com/alankrithaa/recommendation-system" target="_blank" class="btn github-btn">View Code</a>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-        </div>
+                <div class="project-card">
+                    <img src="detect-people-object-detection.png" alt="Image Filtering Pipeline" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">Image Filtering Pipeline</h3>
+                        <p class="card-description">An automated dataset curation pipeline optimized for processing, filtering, and refining person crops.</p>
+                        <div class="btn-container">
+                            <a href="https://github.com/alankrithaa/image_filtering_pipeline/blob/main/image_filtering_pipeline/README.md" target="_blank" class="btn github-btn">View Code</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </details>
+
+        <details class="collapsible-section">
+            <summary>Side Quests</summary>
+            <div class="section-body">
+                <div class="simple-card" style="flex-direction: column; align-items: flex-start;">
+                    <span class="simple-title">Hackathon Mentor & Technical Evaluator @ NTU Deep Learning Week Hackathon</span>
+                    <span class="quest-desc">Evaluated submissions & code quality, designed an AI for Education track.</span>
+                </div>
+
+                <div class="simple-card" style="flex-direction: column; align-items: flex-start;">
+                    <span class="simple-title">Communications & Telemetry Lead @ Archimedes Autonomous Vehicles</span>
+                    <span class="quest-desc">Working with ROS2 and real-time data transfer.</span>
+                </div>
+
+                <div class="simple-card">
+                    <span class="simple-title">NTU Women in Tech Mentorship Programme</span>
+                </div>
+            </div>
+        </details>
+
     </div>
 
     <script>
@@ -320,8 +396,8 @@
             height = canvas.height = window.innerHeight;
         });
 
-        const mouse = { x: null, y: null, radius: 120 };
-        
+        const mouse = { x: null, y: null, radius: 110 };
+
         window.addEventListener('mousemove', (e) => {
             mouse.x = e.clientX;
             mouse.y = e.clientY;
@@ -333,65 +409,53 @@
         });
 
         window.addEventListener('touchmove', (e) => {
-            if(e.touches.length > 0) {
+            if (e.touches.length > 0) {
                 mouse.x = e.touches[0].clientX;
                 mouse.y = e.touches[0].clientY;
             }
         });
 
-        // Trigger popping mechanism
         window.addEventListener('mousedown', popBubble);
         window.addEventListener('touchstart', popBubble);
 
         function popBubble(e) {
-            let clickX, clickY;
-            if (e.type === 'touchstart') {
-                clickX = e.touches[0].clientX;
-                clickY = e.touches[0].clientY;
-            } else {
-                clickX = e.clientX;
-                clickY = e.clientY;
-            }
+            let clickX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+            let clickY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
 
             for (let i = particles.length - 1; i >= 0; i--) {
                 const p = particles[i];
                 if (p.poppingStage === 0) {
                     const dx = clickX - p.x;
                     const dy = clickY - p.y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-                    if (distance < p.radius) {
-                        p.poppingStage = 1; 
-                        break; 
+                    if (Math.sqrt(dx * dx + dy * dy) < p.radius) {
+                        p.poppingStage = 1;
+                        break;
                     }
                 }
             }
         }
 
-        // Palette array containing nice soft pastel colors (Light Pink, Soft Purple, Sky Blue, Muted Mint)
         const pastelPalette = [
             [255, 182, 193], // Soft Pink
             [211, 194, 243], // Pastel Purple
             [173, 216, 230], // Soft Ice Blue
-            [167, 230, 215]  // Light Mint
+            [167, 230, 215]  // Muted Mint
         ];
 
-        const particles = [];
-        const particleCount = 35; // Lower count for an elegant, less cluttered background
+        let particles = [];
+        const baseTargetCount = 35;
 
         class Bubble {
-            constructor() {
-                // Select a random pastel base color from our palette
-                this.colorBase = pastelPalette[Math.floor(Math.random() * pastelPalette.length)];
-                this.radius = Math.random() * 20 + 15;
-                this.x = Math.random() * (width - this.radius * 2) + this.radius;
-                this.y = Math.random() * (height) + height * 0.2; // Distribute across vertical space initially
-                
-                // Physics and floating parameters
+            constructor(x = null, y = null, radius = null, color = null) {
+                this.colorBase = color || pastelPalette[Math.floor(Math.random() * pastelPalette.length)];
+                this.radius = radius || (Math.random() * 16 + 14);
+                this.x = x !== null ? x : Math.random() * (width - this.radius * 2) + this.radius;
+                this.y = y !== null ? y : Math.random() * height + height * 0.1;
+
                 this.speedY = Math.random() * -0.6 - 0.2;
                 this.speedX = (Math.random() - 0.5) * 0.4;
-                this.friction = 0.98;
-                this.alpha = Math.random() * 0.12 + 0.15; // Delicate opacity
-                
+                this.friction = 0.985;
+                this.alpha = Math.random() * 0.12 + 0.15;
                 this.poppingStage = 0;
             }
 
@@ -402,38 +466,38 @@
                 }
 
                 const gradient = ctx.createRadialGradient(
-                    this.x - this.radius/3, this.y - this.radius/3, 1,
+                    this.x - this.radius / 3, this.y - this.radius / 3, 1,
                     this.x, this.y, this.radius
                 );
-                
+
                 const c = this.colorBase;
-                gradient.addColorStop(0, `rgba(255, 255, 255, ${this.alpha + 0.25})`);
+                gradient.addColorStop(0, `rgba(255, 255, 255, ${this.alpha + 0.28})`);
                 gradient.addColorStop(0.6, `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${this.alpha})`);
-                gradient.addColorStop(1, `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${this.alpha + 0.15})`);
+                gradient.addColorStop(1, `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${this.alpha + 0.18})`);
 
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
                 ctx.fillStyle = gradient;
                 ctx.fill();
-                
-                ctx.strokeStyle = `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${this.alpha + 0.25})`;
+
+                ctx.strokeStyle = `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${this.alpha + 0.3})`;
                 ctx.lineWidth = 1;
                 ctx.stroke();
 
-                // Soft specular accent sheen
-                ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha + 0.3})`;
+                // Sheen
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha + 0.35})`;
                 ctx.beginPath();
-                ctx.arc(this.x - this.radius/2.5, this.y - this.radius/2.5, this.radius/4, 0, Math.PI * 2);
+                ctx.arc(this.x - this.radius / 2.5, this.y - this.radius / 2.5, this.radius / 4.2, 0, Math.PI * 2);
                 ctx.fill();
             }
 
             drawPop() {
-                ctx.strokeStyle = `rgba(${this.colorBase[0]}, ${this.colorBase[1]}, ${this.colorBase[2]}, ${1 - this.poppingStage/10})`;
+                ctx.strokeStyle = `rgba(${this.colorBase[0]}, ${this.colorBase[1]}, ${this.colorBase[2]}, ${1 - this.poppingStage / 10})`;
                 ctx.lineWidth = 2;
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius * (1 + this.poppingStage/10), 0, Math.PI * 2);
+                ctx.arc(this.x, this.y, this.radius * (1 + this.poppingStage / 10), 0, Math.PI * 2);
                 ctx.stroke();
-                
+
                 this.poppingStage++;
                 if (this.poppingStage > 10) {
                     this.respawn();
@@ -446,27 +510,27 @@
                 this.x += this.speedX;
                 this.y += this.speedY;
 
-                // Wall boundary checks
+                // Wall bounds
                 if (this.x + this.radius > width || this.x - this.radius < 0) {
                     this.speedX *= -1;
                     this.x = this.x - this.radius < 0 ? this.radius : width - this.radius;
                 }
 
-                // Fluid mouse interactive evasion / nudge response
-                if (mouse.x != null && mouse.y != null) {
+                // Interactive cursor nudging
+                if (mouse.x !== null && mouse.y !== null) {
                     let dx = mouse.x - this.x;
                     let dy = mouse.y - this.y;
-                    let distance = Math.sqrt(dx * dx + dy * dy);
-                    if (distance < mouse.radius) {
-                        this.speedX -= dx / distance * 0.08;
-                        this.speedY -= dy / distance * 0.08;
+                    let dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < mouse.radius) {
+                        let force = (1 - dist / mouse.radius) * 0.22;
+                        this.speedX -= (dx / dist) * force;
+                        this.speedY -= (dy / dist) * force;
                     }
                 }
-                
-                this.speedX *= this.friction;
-                if (this.speedY > -0.8) this.speedY -= 0.005; 
 
-                // Automatically loop to bottom if floats off screen top
+                this.speedX *= this.friction;
+                if (this.speedY > -0.7) this.speedY -= 0.004;
+
                 if (this.y < -this.radius * 2) {
                     this.respawn();
                 }
@@ -474,7 +538,7 @@
 
             respawn() {
                 this.colorBase = pastelPalette[Math.floor(Math.random() * pastelPalette.length)];
-                this.radius = Math.random() * 20 + 15;
+                this.radius = Math.random() * 16 + 14;
                 this.x = Math.random() * (width - this.radius * 2) + this.radius;
                 this.y = height + this.radius * 2;
                 this.speedY = Math.random() * -0.6 - 0.2;
@@ -484,38 +548,56 @@
             }
         }
 
-        // Initialize bubbles array
-        for (let i = 0; i < particleCount; i++) {
+        for (let i = 0; i < baseTargetCount; i++) {
             particles.push(new Bubble());
         }
 
-        // Interconnected sticky layout rendering engine
-        function handleConnections() {
-            const activeBubbles = particles.filter(p => p.poppingStage === 0);
-            
-            for (let i = 0; i < activeBubbles.length; i++) {
-                for (let j = i + 1; j < activeBubbles.length; j++) {
-                    const p1 = activeBubbles[i];
-                    const p2 = activeBubbles[j];
+        // Handle collision merging & sticky bridges
+        function handleInteractions() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const p1 = particles[i];
+                    const p2 = particles[j];
+
+                    if (p1.poppingStage > 0 || p2.poppingStage > 0) continue;
+
                     const dx = p1.x - p2.x;
                     const dy = p1.y - p2.y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
-                    const minDist = p1.radius + p2.radius + 15; // Connects if nudged nearby
+                    const touchDist = p1.radius + p2.radius;
 
-                    if (distance < minDist) {
-                        // Smoothly average speeds when connected to float together organically
+                    // Collision merge mechanic
+                    if (distance < touchDist * 0.65 && p1.radius + p2.radius < 58) {
+                        const newRadius = Math.min(Math.sqrt(p1.radius ** 2 + p2.radius ** 2), 52);
+                        const blendedColor = [
+                            Math.round((p1.colorBase[0] + p2.colorBase[0]) / 2),
+                            Math.round((p1.colorBase[1] + p2.colorBase[1]) / 2),
+                            Math.round((p1.colorBase[2] + p2.colorBase[2]) / 2)
+                        ];
+
+                        p1.radius = newRadius;
+                        p1.colorBase = blendedColor;
+                        p1.speedX = (p1.speedX + p2.speedX) / 2;
+                        p1.speedY = (p1.speedY + p2.speedY) / 2;
+
+                        p2.respawn();
+                        continue;
+                    }
+
+                    // Soft interconnection gooey link
+                    const connectDist = touchDist + 22;
+                    if (distance < connectDist) {
                         const avgSpeedX = (p1.speedX + p2.speedX) / 2;
                         const avgSpeedY = (p1.speedY + p2.speedY) / 2;
                         p1.speedX = p2.speedX = avgSpeedX;
                         p1.speedY = p2.speedY = avgSpeedY;
 
-                        // Unified structural gooey line link color
-                        const lineAlpha = (1 - (distance / minDist)) * 0.22;
+                        const lineAlpha = (1 - (distance / connectDist)) * 0.22;
                         ctx.beginPath();
                         ctx.moveTo(p1.x, p1.y);
                         ctx.lineTo(p2.x, p2.y);
-                        ctx.strokeStyle = `rgba(${(p1.colorBase[0]+p2.colorBase[0])/2}, ${(p1.colorBase[1]+p2.colorBase[1])/2}, ${(p1.colorBase[2]+p2.colorBase[2])/2}, ${lineAlpha})`;
-                        ctx.lineWidth = (p1.radius + p2.radius) * 0.12; 
+                        ctx.strokeStyle = `rgba(${(p1.colorBase[0] + p2.colorBase[0]) / 2}, ${(p1.colorBase[1] + p2.colorBase[1]) / 2}, ${(p1.colorBase[2] + p2.colorBase[2]) / 2}, ${lineAlpha})`;
+                        ctx.lineWidth = (p1.radius + p2.radius) * 0.12;
                         ctx.lineCap = 'round';
                         ctx.stroke();
                     }
@@ -523,20 +605,19 @@
             }
         }
 
-        // Core animation rendering routine
         function animate() {
             ctx.clearRect(0, 0, width, height);
-            
-            // Render connecting gooey linkages behind main objects
-            handleConnections();
 
-            // Handle objects updating and drawing
+            handleInteractions();
+
             for (let i = 0; i < particles.length; i++) {
                 particles[i].update();
                 particles[i].draw();
             }
+
             requestAnimationFrame(animate);
         }
+
         animate();
     </script>
 </body>
